@@ -8,13 +8,13 @@ from .models import Recipe
 
 class RecipeFilter(filters.FilterSet):
     is_in_shopping_cart = filters.BooleanFilter(
-        method="filter_is_in_shopping_cart", widget=BooleanWidget()
+        method='filter_is_in_shopping_cart', widget=BooleanWidget()
     )
     is_favorited = filters.BooleanFilter(
-        method="filter_is_favorited", widget=BooleanWidget()
+        method='filter_is_favorited', widget=BooleanWidget()
     )
-    tags = AllValuesMultipleFilter(field_name="tags__slug")
-    author = AllValuesMultipleFilter(field_name="author__id")
+    tags = AllValuesMultipleFilter(field_name='tags__slug')
+    author = AllValuesMultipleFilter(field_name='author__id')
 
     def filter_is_favorited(self, queryset, name, value):
         user = self.request.user
@@ -30,7 +30,7 @@ class RecipeFilter(filters.FilterSet):
 
     class Meta:
         model = Recipe
-        fields = ["tags__slug", "is_favorited", "is_in_shopping_cart"]
+        fields = ['tags__slug', 'is_favorited', 'is_in_shopping_cart']
 
 
 class IngredientSearchFilter(SearchFilter):

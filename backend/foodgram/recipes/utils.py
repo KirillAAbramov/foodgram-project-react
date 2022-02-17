@@ -2,11 +2,16 @@ import io
 
 from django.db.models import F, Sum
 from django.http import FileResponse
+from django.shortcuts import get_object_or_404
+
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
+from rest_framework import status
+from rest_framework.response import Response
 
-from .models import RecipeIngredient
+from .models import Recipe, RecipeIngredient
+from .serializers import FavoriteSerializer
 
 
 def get_shopping_list(self, request):
@@ -15,7 +20,7 @@ def get_shopping_list(self, request):
         recipe__shopping_cart__user=user).values(
         name=F('ingredients__name'),
         unit=F('ingredients__measurement_unit')
-    ).annotate(amount=Sum('amount')).order_by()
+    ).annotate(amount=Sum('amount'))
     font = 'DejaVuSerif'
     pdfmetrics.registerFont(
         TTFont('DejaVuSerif', 'DejaVuSerif.ttf', 'UTF-8'))
@@ -46,3 +51,19 @@ def get_shopping_list(self, request):
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True,
                         filename='shopping_list.pdf')
+
+
+def delete(request, id, model):
+    user = request.user
+    recipe = get_object_or_404(Recipe, id=id)
+    obj = get_object_or_404(model, user=user, recipe=recipe)
+    obj.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+def post(request, id, model):
+    user = request.user
+    recipe = get_object_or_404(Recipe, id=id)
+    model.objects.get_or_create(user=user, recipe=recipe)
+    serializer = FavoriteSerializer(recipe, context={'request': request})
+    return Response(serializer.data, status=status.HTTP_201_CREATED)

@@ -1,4 +1,5 @@
 from django.urls import include, path
+
 from rest_framework.routers import SimpleRouter
 
 from .views import (APIFavorite, APIShoppingCart, IngredientsViewSet,
@@ -11,8 +12,17 @@ router.register('ingredients', IngredientsViewSet, basename='ingredients')
 router.register('recipes', RecipeViewSet, basename='recipes')
 
 urlpatterns = [
-    path('recipes/download_shopping_cart/', APIShoppingCart.as_view()),
+    path(
+        'recipes/download_shopping_cart/',
+        APIShoppingCart.as_view(),
+        name='download_shopping_cart'),
     path('', include(router.urls)),
-    path('recipes/<int:id>/favorite/', APIFavorite.as_view()),
-    path('recipes/<int:id>/shopping_cart/', APIShoppingCart.as_view()),
+    path(
+        'recipes/<int:id>/favorite/',
+        APIFavorite.as_view(),
+        name='favorite'),
+    path(
+        'recipes/<int:id>/shopping_cart/',
+        APIShoppingCart.as_view(),
+        name='shopping_cart'),
 ]

@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, get_user_model
+
 from djoser.compat import get_user_email, get_user_email_field_name
 from djoser.conf import settings
 from djoser.serializers import UserCreateSerializer
@@ -66,11 +67,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_is_subscribed(self, author):
         user = self.context['request'].user
-        if (user.is_authenticated and Follow.objects.filter(
+        return (user.is_authenticated and Follow.objects.filter(
                 user=user,
-                author=author).exists()):
-            return True
-        return False
+                author=author).exists())
 
     def update(self, instance, validated_data):
         email_field = get_user_email_field_name(User)
@@ -113,10 +112,9 @@ class SubscriptionsSerializer(serializers.ModelSerializer):
         return FollowingRecipeSerializer(recipes, many=True).data
 
     def get_is_subscribed(self, author):
-        if Follow.objects.filter(author=author,
-                                 user=self.context['request'].user).exists():
-            return True
-        return False
+        return Follow.objects.filter(
+            author=author,
+            user=self.context['request'].user).exists()
 
     def get_recipes_count(self, author):
         return author.recipes.count()
