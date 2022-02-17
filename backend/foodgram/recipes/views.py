@@ -6,8 +6,10 @@ from rest_framework.views import APIView
 from .filters import IngredientSearchFilter, RecipeFilter
 from .models import Favorite, Ingredient, Recipe, ShoppingCart, Tag
 from .permissions import AuthorOrReadOnly
-from .serializers import (CreateRecipeSerializer, IngredientSerializer,
-                          TagSerializer, ViewRecipeSerializer)
+from .serializers import (
+    CreateRecipeSerializer, IngredientSerializer, TagSerializer,
+    ViewRecipeSerializer,
+)
 from .utils import delete, get_shopping_list, post
 
 

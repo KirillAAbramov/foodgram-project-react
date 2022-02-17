@@ -2,8 +2,10 @@ from django.urls import include, path
 
 from rest_framework.routers import SimpleRouter
 
-from .views import (APIFavorite, APIShoppingCart, IngredientsViewSet,
-                    RecipeViewSet, TagViewSet)
+from .views import (
+    APIFavorite, APIShoppingCart, IngredientsViewSet, RecipeViewSet,
+    TagViewSet,
+)
 
 router = SimpleRouter()
 

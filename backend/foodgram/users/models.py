@@ -15,12 +15,10 @@ class User(AbstractUser):
     )
     first_name = models.CharField(
         max_length=150,
-        unique=False,
         verbose_name='Имя'
     )
     last_name = models.CharField(
         max_length=150,
-        unique=False,
         verbose_name='Фамилия'
     )
     password = models.CharField(
