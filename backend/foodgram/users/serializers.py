@@ -6,7 +6,6 @@ from djoser.serializers import UserCreateSerializer
 from rest_framework import serializers
 
 from recipes.models import Recipe
-
 from .models import Follow
 
 User = get_user_model()
