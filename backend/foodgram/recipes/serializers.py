@@ -2,8 +2,9 @@ from rest_framework import serializers
 
 from users.serializers import UserSerializer
 from .fields import Base64ImageField
-from .models import (Favorite, Ingredient, Recipe, RecipeIngredient,
-                     ShoppingCart, Tag)
+from .models import (
+    Favorite, Ingredient, Recipe, RecipeIngredient, ShoppingCart, Tag,
+)
 
 
 class TagSerializer(serializers.ModelSerializer):
