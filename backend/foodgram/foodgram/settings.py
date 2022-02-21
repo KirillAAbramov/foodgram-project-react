@@ -8,7 +8,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.getenv("SECRET_KEY", default="secret")
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -67,7 +67,6 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT', default=5432),
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {

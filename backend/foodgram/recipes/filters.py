@@ -2,7 +2,7 @@ from django_filters import AllValuesMultipleFilter, rest_framework as filters
 from django_filters.widgets import BooleanWidget
 from rest_framework.filters import SearchFilter
 
-from .models import Recipe
+from .models import Recipe, Tag
 
 
 class RecipeFilter(filters.FilterSet):
@@ -12,7 +12,11 @@ class RecipeFilter(filters.FilterSet):
     is_favorited = filters.BooleanFilter(
         method='filter_is_favorited', widget=BooleanWidget()
     )
-    tags = AllValuesMultipleFilter(field_name='tags__slug')
+    tags = filters.ModelMultipleChoiceFilter(
+        field_name='tags__slug',
+        to_field_name='slug',
+        queryset=Tag.objects.all(),
+    )
     author = AllValuesMultipleFilter(field_name='author__id')
 
     def filter_is_favorited(self, queryset, name, value):

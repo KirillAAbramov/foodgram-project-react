@@ -7,11 +7,13 @@ from users.models import User
 class Tag(models.Model):
     name = models.CharField(
         max_length=200,
+        unique=True,
         verbose_name='Название'
     )
     color = models.CharField(
         max_length=7,
         blank=True,
+        unique=True,
         verbose_name='Цвет в HEX'
     )
     slug = models.SlugField(
