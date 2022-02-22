@@ -57,6 +57,8 @@ class APIFavorite(APIView):
 
 class APIShoppingCart(APIView):
 
+    pagination_class = None
+
     def get(self, request):
         return get_shopping_list(self, request)
 
