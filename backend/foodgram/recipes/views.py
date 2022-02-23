@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 
 from .filters import IngredientSearchFilter, RecipeFilter
 from .models import Favorite, Ingredient, Recipe, ShoppingCart, Tag
+from .pagination import LimitPageNumberPagination
 from .permissions import AuthorOrReadOnly
 from .serializers import (
     CreateRecipeSerializer, IngredientSerializer, TagSerializer,
@@ -36,6 +37,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     serializer_class = ViewRecipeSerializer
     permission_classes = (AuthorOrReadOnly,)
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter)
+    pagination_class = LimitPageNumberPagination
     filterset_class = RecipeFilter
     filterset_fields = ('tags', 'author')
     ordering_fields = ('id',)
@@ -56,8 +58,6 @@ class APIFavorite(APIView):
 
 
 class APIShoppingCart(APIView):
-
-    pagination_class = None
 
     def get(self, request):
         return get_shopping_list(self, request)
